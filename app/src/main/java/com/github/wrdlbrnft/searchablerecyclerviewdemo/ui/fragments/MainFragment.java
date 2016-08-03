@@ -20,8 +20,8 @@ import com.github.wrdlbrnft.searchablerecyclerviewdemo.ui.adapter.models.Example
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends Fragment implements SearchView.OnQueryTextListener {
-
+public class MainFragment extends Fragment implements SearchView.OnQueryTextListener
+{
     public static MainFragment newInstance() {
         return new MainFragment();
     }
@@ -81,16 +81,14 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
             "Home"
     };
 
-    private RecyclerView mRecyclerView;
-    private ExampleAdapter mAdapter;
-    private List<ExampleModel> mModels;
+    private RecyclerView        _recyclerView;
+    private ExampleAdapter      _adapter;
+    private List<ExampleModel>  _models;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_main, container, false);
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-
+        _recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         return view;
     }
 
@@ -99,16 +97,16 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        _recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mModels = new ArrayList<>();
+        _models = new ArrayList<>();
 
         for (String movie : MOVIES) {
-            mModels.add(new ExampleModel(movie));
+            _models.add(new ExampleModel(movie));
         }
 
-        mAdapter = new ExampleAdapter(getActivity(), mModels);
-        mRecyclerView.setAdapter(mAdapter);
+        _adapter = new ExampleAdapter(getActivity(), this, _models);
+        _recyclerView.setAdapter(_adapter);
     }
 
     @Override
@@ -122,9 +120,9 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
 
     @Override
     public boolean onQueryTextChange(String query) {
-        final List<ExampleModel> filteredModelList = filter(mModels, query);
-        mAdapter.animateTo(filteredModelList);
-        mRecyclerView.scrollToPosition(0);
+        final List<ExampleModel> filteredModelList = filter(_models, query);
+        _adapter.animateTo(filteredModelList);
+        _recyclerView.scrollToPosition(0);
         return true;
     }
 
@@ -144,5 +142,10 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
             }
         }
         return filteredModelList;
+    }
+
+    public void scrollTo(int position)
+    {
+        _recyclerView.smoothScrollToPosition(position);
     }
 }
