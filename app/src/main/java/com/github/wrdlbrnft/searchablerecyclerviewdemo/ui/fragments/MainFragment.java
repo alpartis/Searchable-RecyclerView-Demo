@@ -81,6 +81,7 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
             "Home"
     };
 
+    private final String        LOGTAG = MainFragment.class.getSimpleName();
     private LinearLayoutManager _layoutMgr;
     private RecyclerView        _recyclerView;
     private ExampleAdapter      _adapter;
@@ -148,6 +149,8 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
 
     public void scrollTo(int position)
     {
-        _layoutMgr.scrollToPosition(position);
+        if (position >= _layoutMgr.findLastCompletelyVisibleItemPosition()) {
+            _layoutMgr.scrollToPositionWithOffset(position, 50);
+        }
     }
 }
