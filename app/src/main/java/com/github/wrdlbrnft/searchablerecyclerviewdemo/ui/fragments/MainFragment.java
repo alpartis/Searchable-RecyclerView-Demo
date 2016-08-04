@@ -81,6 +81,7 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
             "Home"
     };
 
+    private LinearLayoutManager _layoutMgr;
     private RecyclerView        _recyclerView;
     private ExampleAdapter      _adapter;
     private List<ExampleModel>  _models;
@@ -97,7 +98,8 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
 
-        _recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        _layoutMgr = new LinearLayoutManager(getActivity());
+        _recyclerView.setLayoutManager(_layoutMgr);
 
         _models = new ArrayList<>();
 
@@ -146,6 +148,6 @@ public class MainFragment extends Fragment implements SearchView.OnQueryTextList
 
     public void scrollTo(int position)
     {
-        _recyclerView.smoothScrollToPosition(position);
+        _layoutMgr.scrollToPosition(position);
     }
 }
